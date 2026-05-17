@@ -13,7 +13,6 @@
 [![Deploy on Vercel](https://img.shields.io/badge/Frontend-Vercel-black?logo=vercel)](https://vercel.com)
 [![API on Render](https://img.shields.io/badge/API-Render-46E3B7?logo=render)](https://render.com)
 
-[**Live Demo →**](https://habulator.vercel.app) &nbsp;|&nbsp; [**API Docs →**](https://habulator-api.onrender.com/docs) &nbsp;|&nbsp; [**Paper →**](#citation)
 
 </div>
 
@@ -35,10 +34,9 @@ Supports five phytoplankton groups: Early Diatoms, Late Diatoms, Chlorophytes, C
 
 | Feature | Detail |
 |---|---|
-| 🎯 **Accurate predictions** | XGBoost trained on 20+ years of GLNPO monitoring data |
-| 📊 **Honest uncertainty** | Split conformal 90% PI — mathematically guaranteed coverage |
-| 🔍 **Explainability** | Per-prediction SHAP waterfall — not a black box |
-| 🌊 **Two views** | Simple (bloom level) for managers · Technical (mg/L + PI) for scientists |
+| 🎯 **predictions** | XGBoost trained on 20+ years of GLNPO monitoring data |
+| 📊 **uncertainty** | Split conformal 90% PI — mathematically guaranteed coverage |
+| 🔍 **Explainability** | Per-prediction SHAP waterfall |
 | ⚡ **Fast** | Prediction + SHAP in < 100ms per request |
 | 🔌 **Open API** | FastAPI with OpenAPI docs at `/docs` |
 
@@ -210,11 +208,9 @@ Content-Type: application/json
 ## Methods
 
 - **Model**: XGBoost regressor, 100-trial Optuna hyperparameter optimisation (5-fold CV)
-- **Target transform**: log(1+x) — handles zero-inflated, right-skewed biovolume
-- **Back-transform**: Duan smearing correction for unbiased mg/L predictions
 - **Uncertainty**: Split conformal prediction (90% nominal coverage, calibrated on held-out test set)
 - **Explainability**: SHAP TreeExplainer (exact Shapley values for tree models)
-- **Data**: USEPA GLNPO monitoring programme, Great Lakes 2001–2022, n ≈ 2,400 after QC
+- **Data**: USEPA GLNPO monitoring programme, Great Lakes 2001–2022
 
 ---
 
