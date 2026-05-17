@@ -2,10 +2,12 @@
 
 import { useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
+import { Sliders, BarChart2 } from 'lucide-react'
 import Header from '@/components/Header'
 import GroupTabs from '@/components/GroupTabs'
 import InputPanel from '@/components/InputPanel'
 import ResultPanel from '@/components/ResultPanel'
+import BatchPanel from '@/components/BatchPanel'
 import { predict, ApiError } from '@/lib/api'
 import { FEATURES } from '@/lib/utils'
 import type { InputFeatures, PredictionResult } from '@/lib/types'
@@ -22,6 +24,7 @@ export default function HomePage() {
   const [result, setResult] = useState<PredictionResult | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [mode, setMode] = useState<'single' | 'batch'>('single')
 
   const handleChange = useCallback((key: keyof InputFeatures, value: number) => {
     setValues((prev) => ({ ...prev, [key]: value }))
@@ -63,7 +66,7 @@ export default function HomePage() {
       <Header />
 
       <main className="flex-1 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 py-8 flex flex-col gap-6">
-        {/* Group tabs */}
+        {/* Top bar: title + mode toggle + group tabs */}
         <div className="flex items-start justify-between flex-wrap gap-4">
           <div className="flex flex-col gap-1.5">
             <motion.h1
@@ -83,11 +86,70 @@ export default function HomePage() {
               Select an algal group, adjust environmental parameters, and run the model.
             </motion.p>
           </div>
-          <GroupTabs activeGroup={activeGroup} onGroupChange={handleGroupChange} />
+
+          <div className="flex items-center gap-3 flex-wrap">
+            {/* Mode toggle */}
+            <motion.div
+              initial={{ opacity: 0, y: -6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.15 }}
+              style={{
+                display: 'flex',
+                gap: 4,
+                background: 'rgba(255,255,255,0.07)',
+                borderRadius: 10,
+                padding: 4,
+                border: '1px solid rgba(255,255,255,0.1)',
+              }}
+            >
+              <button
+                onClick={() => setMode('single')}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  padding: '6px 14px',
+                  borderRadius: 7,
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: 13,
+                  fontWeight: 600,
+                  transition: 'all 0.15s ease',
+                  background: mode === 'single' ? '#06b6d4' : 'transparent',
+                  color: mode === 'single' ? '#ffffff' : 'rgba(255,255,255,0.5)',
+                }}
+              >
+                <Sliders size={14} />
+                Single
+              </button>
+              <button
+                onClick={() => setMode('batch')}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  padding: '6px 14px',
+                  borderRadius: 7,
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: 13,
+                  fontWeight: 600,
+                  transition: 'all 0.15s ease',
+                  background: mode === 'batch' ? '#06b6d4' : 'transparent',
+                  color: mode === 'batch' ? '#ffffff' : 'rgba(255,255,255,0.5)',
+                }}
+              >
+                <BarChart2 size={14} />
+                Batch
+              </button>
+            </motion.div>
+
+            <GroupTabs activeGroup={activeGroup} onGroupChange={handleGroupChange} />
+          </div>
         </div>
 
-        {/* Error banner */}
-        {error && (
+        {/* Error banner (single mode only) */}
+        {error && mode === 'single' && (
           <motion.div
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
@@ -110,16 +172,26 @@ export default function HomePage() {
           </motion.div>
         )}
 
-        {/* Two-column layout */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[420px_1fr] xl:grid-cols-[460px_1fr]">
-          <InputPanel
-            values={values}
-            onChange={handleChange}
-            onPredict={handlePredict}
-            loading={loading}
-          />
-          <ResultPanel result={result} loading={loading} />
-        </div>
+        {/* Content area */}
+        {mode === 'single' ? (
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-[420px_1fr] xl:grid-cols-[460px_1fr]">
+            <InputPanel
+              values={values}
+              onChange={handleChange}
+              onPredict={handlePredict}
+              loading={loading}
+            />
+            <ResultPanel result={result} loading={loading} />
+          </div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <BatchPanel activeGroup={activeGroup} />
+          </motion.div>
+        )}
       </main>
 
       {/* Footer */}

@@ -1,4 +1,4 @@
-import type { InputFeatures, PredictionResult } from './types'
+import type { InputFeatures, PredictionResult, BatchInputRow, BatchPredictResponse } from './types'
 
 const API_BASE =
   process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') ?? 'http://localhost:8000'
@@ -52,6 +52,19 @@ export async function predict(
   })
 
   return handleResponse<PredictionResult>(res)
+}
+
+export async function batchPredict(
+  group: string,
+  rows: BatchInputRow[]
+): Promise<BatchPredictResponse> {
+  const res = await fetch(`${API_BASE}/batch-predict`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+    body: JSON.stringify({ group, rows }),
+    signal: AbortSignal.timeout(120_000),  // 2 min for large batches
+  })
+  return handleResponse<BatchPredictResponse>(res)
 }
 
 export async function healthCheck(): Promise<{ status: string; model: string; version: string }> {

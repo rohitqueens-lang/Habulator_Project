@@ -389,3 +389,119 @@ async def predict(req: PredictRequest) -> PredictResponse:
         coverage=round(1.0 - _state.alpha, 2),
         group=req.group,
     )
+
+
+# ─── Batch predict ────────────────────────────────────────────────────────────
+class BatchPredictRequest(BaseModel):
+    group: str
+    rows: list[dict[str, Any]]
+
+
+@app.post("/batch-predict", tags=["prediction"])
+async def batch_predict(request: BatchPredictRequest) -> dict[str, Any]:
+    if len(request.rows) == 0:
+        raise HTTPException(status_code=400, detail="No rows provided")
+    if len(request.rows) > 5000:
+        raise HTTPException(status_code=400, detail="Maximum 5,000 rows per batch request")
+
+    if _state.booster is None:
+        raise HTTPException(status_code=503, detail="Model not loaded — try again shortly")
+
+    results: list[dict[str, Any]] = []
+    n_error = 0
+
+    for idx, row in enumerate(request.rows):
+        try:
+            temp   = float(row["TEMP"])
+            tp     = float(row["TP"])
+            si     = float(row["SI"])
+            no23   = float(row["NO23"])
+            secchi = float(row["Secchi_m"])
+            depth  = float(row["STN_DEPTH_M"])
+            doy    = float(row["DOY"])
+
+            doy_rad  = 2 * math.pi * doy / 365.0
+            doy_sin  = math.sin(doy_rad)
+            doy_cos  = math.cos(doy_rad)
+            np_ratio = no23 / tp if tp > 0 else 0.0
+
+            raw_values: dict[str, float] = {
+                "TEMP": temp,
+                "TP": tp,
+                "SI": si,
+                "NO23": no23,
+                "Secchi_m": secchi,
+                "STN_DEPTH_M": depth,
+                "DOY_sin": doy_sin,
+                "DOY_cos": doy_cos,
+                "NP_ratio": np_ratio,
+            }
+
+            X = np.array([[raw_values[f] for f in FEATURES]], dtype=np.float32)
+            dmat = xgb.DMatrix(X, feature_names=FEATURES)
+
+            log_hat: float = float(_state.booster.predict(dmat)[0])
+
+            smear    = _state.smearing_factor
+            q        = _state.conformal_quantile
+
+            pred_raw  = smear * math.exp(log_hat)
+            pred_mgL  = max(0.0, pred_raw - 1.0)
+
+            lower_raw = smear * math.exp(log_hat - q)
+            upper_raw = smear * math.exp(log_hat + q)
+            lower_mgL = max(0.0, lower_raw - 1.0)
+            upper_mgL = max(0.0, upper_raw - 1.0)
+
+            lower_mgL = min(lower_mgL, pred_mgL)
+            upper_mgL = max(upper_mgL, pred_mgL)
+
+            if pred_mgL < 0.5:
+                bloom = "Low"
+            elif pred_mgL < 2.0:
+                bloom = "Moderate"
+            elif pred_mgL < 5.0:
+                bloom = "Elevated"
+            else:
+                bloom = "High"
+
+            results.append({
+                "_row": idx + 1,
+                "TEMP": temp,
+                "TP": tp,
+                "SI": si,
+                "NO23": no23,
+                "Secchi_m": secchi,
+                "STN_DEPTH_M": depth,
+                "DOY": doy,
+                "low_mgL": round(lower_mgL, 4),
+                "pred_mgL": round(pred_mgL, 4),
+                "high_mgL": round(upper_mgL, 4),
+                "bloom_level": bloom,
+                "error": "",
+            })
+
+        except Exception as exc:
+            n_error += 1
+            results.append({
+                "_row": idx + 1,
+                "TEMP": row.get("TEMP", 0),
+                "TP": row.get("TP", 0),
+                "SI": row.get("SI", 0),
+                "NO23": row.get("NO23", 0),
+                "Secchi_m": row.get("Secchi_m", 0),
+                "STN_DEPTH_M": row.get("STN_DEPTH_M", 0),
+                "DOY": row.get("DOY", 0),
+                "low_mgL": 0,
+                "pred_mgL": 0,
+                "high_mgL": 0,
+                "bloom_level": "Error",
+                "error": str(exc),
+            })
+
+    return {
+        "results": results,
+        "n_success": len(results) - n_error,
+        "n_error": n_error,
+        "group": request.group,
+    }

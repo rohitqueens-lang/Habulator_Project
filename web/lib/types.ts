@@ -26,6 +26,41 @@ export interface PredictionResult {
 
 export type BloomLevel = 'low' | 'moderate' | 'elevated' | 'high'
 
+// Batch prediction types
+export interface BatchInputRow {
+  TEMP: number
+  TP: number
+  SI: number
+  NO23: number
+  Secchi_m: number
+  STN_DEPTH_M: number
+  DOY: number
+  [key: string]: number | string  // allow extra columns (e.g. station ID, date)
+}
+
+export interface BatchResultRow {
+  _row: number           // original row index (1-based)
+  TEMP: number
+  TP: number
+  SI: number
+  NO23: number
+  Secchi_m: number
+  STN_DEPTH_M: number
+  DOY: number
+  low_mgL: number
+  pred_mgL: number
+  high_mgL: number
+  bloom_level: string    // "Low" | "Moderate" | "Elevated" | "High"
+  error?: string         // if this row failed
+}
+
+export interface BatchPredictResponse {
+  results: BatchResultRow[]
+  n_success: number
+  n_error: number
+  group: string
+}
+
 export interface GroupConfig {
   id: string
   label: string
