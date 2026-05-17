@@ -25,7 +25,7 @@ function Tooltip({ label }: { label: string }) {
       <div
         className="absolute left-1/2 -bottom-1 -translate-x-1/2 h-2 w-2 rotate-45"
         style={{
-          background: 'rgba(15,23,42,0.95)',
+          background: 'rgba(15,23,42,0.9)',
           border: '1px solid rgba(255,255,255,0.12)',
           borderTop: 'none',
           borderLeft: 'none',
@@ -59,8 +59,8 @@ function GroupTab({
           isActive
             ? 'text-white'
             : group.available
-            ? 'text-white/50 hover:text-white/80'
-            : 'text-white/25',
+            ? 'text-slate-500 hover:text-slate-700'
+            : 'text-slate-300',
         ].join(' ')}
         style={{
           opacity: group.available ? 1 : 0.5,
@@ -77,9 +77,20 @@ function GroupTab({
             style={{
               background: `linear-gradient(135deg, rgba(34,211,238,0.18) 0%, rgba(59,130,246,0.12) 100%)`,
               border: '1px solid rgba(34,211,238,0.35)',
-              boxShadow: '0 0 16px rgba(34,211,238,0.15), inset 0 1px 0 rgba(255,255,255,0.07)',
+              boxShadow: '0 0 16px rgba(34,211,238,0.15), inset 0 1px 0 rgba(255,255,255,0.5)',
             }}
             transition={{ type: 'spring', bounce: 0.2, duration: 0.5 }}
+          />
+        )}
+
+        {/* Hover background */}
+        {!isActive && hovered && group.available && (
+          <motion.div
+            className="absolute inset-0 rounded-xl"
+            style={{ background: 'rgba(0,0,0,0.04)' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
           />
         )}
 
@@ -107,7 +118,7 @@ function GroupTab({
         {/* Full name */}
         <span
           className="relative text-[10px] font-medium tracking-wide leading-none"
-          style={{ color: isActive ? 'rgba(34,211,238,0.7)' : 'rgba(255,255,255,0.25)' }}
+          style={{ color: isActive ? 'rgba(34,211,238,0.7)' : '#94A3B8' }}
         >
           {group.fullName}
         </span>
@@ -136,8 +147,8 @@ export default function GroupTabs({ activeGroup, onGroupChange }: GroupTabsProps
       aria-label="Phytoplankton group selector"
       className="flex items-center gap-1 rounded-2xl p-1.5"
       style={{
-        background: 'rgba(255,255,255,0.03)',
-        border: '1px solid rgba(255,255,255,0.07)',
+        background: 'rgba(0,0,0,0.04)',
+        border: '1px solid rgba(0,0,0,0.06)',
       }}
     >
       {GROUPS.map((group) => (

@@ -21,7 +21,7 @@ function InfoTooltip({ text }: { text: string }) {
         onMouseLeave={() => setShow(false)}
         onFocus={() => setShow(true)}
         onBlur={() => setShow(false)}
-        className="text-white/25 hover:text-white/55 transition-colors focus:outline-none"
+        className="text-slate-400 hover:text-slate-600 transition-colors focus:outline-none"
         aria-label="What is SHAP?"
       >
         <Info size={13} />
@@ -35,14 +35,14 @@ function InfoTooltip({ text }: { text: string }) {
             transition={{ duration: 0.15 }}
             className="absolute left-0 top-6 z-50 w-64 rounded-lg px-3 py-2.5 text-xs leading-relaxed"
             style={{
-              background: 'rgba(10,15,30,0.96)',
+              background: 'rgba(15,23,42,0.96)',
               border: '1px solid rgba(255,255,255,0.1)',
               backdropFilter: 'blur(16px)',
-              boxShadow: '0 8px 32px rgba(0,0,0,0.6)',
-              color: 'rgba(255,255,255,0.6)',
+              boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
+              color: 'rgba(255,255,255,0.7)',
             }}
           >
-            <span style={{ color: 'rgba(255,255,255,0.85)', fontWeight: 600 }}>SHAP</span> (SHapley
+            <span style={{ color: 'rgba(255,255,255,0.9)', fontWeight: 600 }}>SHAP</span> (SHapley
             Additive exPlanations) shows how each feature pushed the prediction up{' '}
             <span style={{ color: '#F97316' }}>▲ orange</span> or down{' '}
             <span style={{ color: '#3B82F6' }}>▼ blue</span> from the model baseline.
@@ -84,9 +84,9 @@ function ShapBar({ entry, maxAbs, index, simple }: ShapBarProps) {
     >
       {/* Feature name — left half */}
       <div className="flex flex-col justify-center" style={{ width: '40%', paddingRight: '12px' }}>
-        <span className="text-xs font-medium text-white/70 truncate leading-tight">{label}</span>
+        <span className="text-xs font-medium text-slate-700 truncate leading-tight">{label}</span>
         {!simple && (
-          <span className="text-[10px] text-white/25 font-mono leading-tight truncate">
+          <span className="text-[10px] text-slate-400 font-mono leading-tight truncate">
             {valStr}
           </span>
         )}
@@ -100,7 +100,7 @@ function ShapBar({ entry, maxAbs, index, simple }: ShapBarProps) {
           style={{
             left: '50%',
             width: '1px',
-            background: 'rgba(255,255,255,0.12)',
+            background: 'rgba(0,0,0,0.12)',
           }}
         />
 
@@ -154,7 +154,7 @@ export default function ShapChart({ entries, baseVal }: ShapChartProps) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <h3 className="text-xs font-semibold text-white/50 tracking-widest uppercase">
+          <h3 className="text-xs font-semibold text-slate-500 tracking-widest uppercase">
             Why this prediction?
           </h3>
           <InfoTooltip text="" />
@@ -167,14 +167,14 @@ export default function ShapChart({ entries, baseVal }: ShapChartProps) {
               className="h-2 w-4 rounded-sm"
               style={{ background: 'rgba(249,115,22,0.6)' }}
             />
-            <span className="text-[10px] text-white/30 font-medium">Increases</span>
+            <span className="text-[10px] text-slate-400 font-medium">Increases</span>
           </div>
           <div className="flex items-center gap-1">
             <div
               className="h-2 w-4 rounded-sm"
               style={{ background: 'rgba(59,130,246,0.6)' }}
             />
-            <span className="text-[10px] text-white/30 font-medium">Decreases</span>
+            <span className="text-[10px] text-slate-400 font-medium">Decreases</span>
           </div>
         </div>
       </div>
@@ -183,9 +183,9 @@ export default function ShapChart({ entries, baseVal }: ShapChartProps) {
       <div
         className="rounded-xl px-4 py-3 flex flex-col divide-y"
         style={{
-          background: 'rgba(255,255,255,0.02)',
-          border: '1px solid rgba(255,255,255,0.05)',
-          divideColor: 'rgba(255,255,255,0.04)',
+          background: 'rgba(0,0,0,0.02)',
+          border: '1px solid rgba(0,0,0,0.06)',
+          divideColor: 'rgba(0,0,0,0.04)',
         }}
       >
         <AnimatePresence mode="popLayout">
@@ -211,10 +211,10 @@ export default function ShapChart({ entries, baseVal }: ShapChartProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="text-[10px] text-white/20 font-medium text-center"
+          className="text-[10px] text-slate-400 font-medium text-center"
         >
           Model baseline (log-scale):{' '}
-          <span className="text-white/35 font-mono">{baseVal.toFixed(3)}</span>
+          <span className="text-slate-500 font-mono">{baseVal.toFixed(3)}</span>
         </motion.p>
       )}
 
@@ -223,10 +223,10 @@ export default function ShapChart({ entries, baseVal }: ShapChartProps) {
         <button
           type="button"
           onClick={() => setSimple((s) => !s)}
-          className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium text-white/35 hover:text-white/60 transition-colors"
+          className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium text-slate-500 hover:text-slate-700 transition-colors"
           style={{
-            background: 'rgba(255,255,255,0.03)',
-            border: '1px solid rgba(255,255,255,0.07)',
+            background: 'rgba(0,0,0,0.03)',
+            border: '1px solid rgba(0,0,0,0.08)',
           }}
           aria-pressed={simple}
         >

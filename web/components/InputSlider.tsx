@@ -104,7 +104,7 @@ export default function InputSlider({
           </div>
           <label
             htmlFor={id}
-            className="text-sm font-medium text-white/80 cursor-pointer"
+            className="text-sm font-medium text-slate-700 cursor-pointer"
           >
             {label}
           </label>
@@ -115,7 +115,7 @@ export default function InputSlider({
               onMouseLeave={() => setShowTooltip(false)}
               onFocus={() => setShowTooltip(true)}
               onBlur={() => setShowTooltip(false)}
-              className="flex items-center text-white/20 hover:text-white/50 transition-colors focus:outline-none"
+              className="flex items-center text-slate-400 hover:text-slate-600 transition-colors focus:outline-none"
               aria-label={`Info about ${label}`}
             >
               <Info size={12} />
@@ -127,12 +127,13 @@ export default function InputSlider({
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 4, scale: 0.92 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute left-0 top-6 z-50 w-56 rounded-lg px-3 py-2 text-xs text-white/65 leading-relaxed"
+                  className="absolute left-0 top-6 z-50 w-56 rounded-lg px-3 py-2 text-xs leading-relaxed"
                   style={{
-                    background: 'rgba(10,15,30,0.95)',
+                    background: 'rgba(15,23,42,0.95)',
                     border: '1px solid rgba(255,255,255,0.1)',
                     backdropFilter: 'blur(16px)',
-                    boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
+                    boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
+                    color: 'rgba(255,255,255,0.75)',
                   }}
                 >
                   {description}
@@ -148,12 +149,12 @@ export default function InputSlider({
           style={{
             background: focused
               ? 'rgba(34,211,238,0.06)'
-              : 'rgba(255,255,255,0.04)',
+              : '#F8FAFC',
             border: isOutOfRange
               ? '1px solid rgba(239,68,68,0.5)'
               : focused
               ? '1px solid rgba(34,211,238,0.35)'
-              : '1px solid rgba(255,255,255,0.08)',
+              : '1px solid #E2E8F0',
             boxShadow: focused ? '0 0 0 2px rgba(34,211,238,0.1)' : 'none',
           }}
         >
@@ -167,10 +168,22 @@ export default function InputSlider({
             onChange={handleNumberInput}
             onFocus={() => setFocused(true)}
             onBlur={handleNumberBlur}
-            className="w-16 bg-transparent text-right text-sm font-mono font-medium text-white/90 outline-none"
+            className="w-16 bg-transparent text-right text-sm font-mono font-medium outline-none"
+            style={{ color: '#0F172A' }}
             aria-label={`${label} value`}
           />
-          <span className="text-xs font-medium text-white/30 select-none">{unit}</span>
+          <span
+            className="text-xs font-medium select-none"
+            style={{
+              background: '#F1F5F9',
+              color: '#64748B',
+              padding: '1px 5px',
+              borderRadius: '4px',
+              fontSize: '10px',
+            }}
+          >
+            {unit}
+          </span>
         </div>
       </div>
 
@@ -203,10 +216,10 @@ export default function InputSlider({
 
         {/* Min/max labels */}
         <div className="flex justify-between">
-          <span className="text-[10px] font-medium text-white/20 tabular-nums">
+          <span className="text-[10px] font-medium text-slate-400 tabular-nums">
             {min} {unit}
           </span>
-          <span className="text-[10px] font-medium text-white/20 tabular-nums">
+          <span className="text-[10px] font-medium text-slate-400 tabular-nums">
             {max} {unit}
           </span>
         </div>

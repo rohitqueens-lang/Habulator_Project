@@ -52,7 +52,7 @@ export default function InputPanel({ values, onChange, onPredict, loading }: Inp
       {/* Panel header */}
       <div
         className="flex items-center gap-3 px-6 py-5"
-        style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}
+        style={{ borderBottom: '1px solid rgba(0,0,0,0.06)' }}
       >
         <div
           className="flex h-8 w-8 items-center justify-center rounded-lg"
@@ -64,8 +64,8 @@ export default function InputPanel({ values, onChange, onPredict, loading }: Inp
           <SlidersHorizontal size={15} className="text-cyan-400" strokeWidth={2} />
         </div>
         <div>
-          <h2 className="text-sm font-semibold text-white/90 tracking-wide">Input Parameters</h2>
-          <p className="text-[11px] text-white/30 font-medium tracking-wide">
+          <h2 className="text-sm font-semibold text-slate-800 tracking-wide">Input Parameters</h2>
+          <p className="text-[11px] text-slate-400 font-medium tracking-wide">
             7 environmental predictors
           </p>
         </div>
@@ -92,7 +92,7 @@ export default function InputPanel({ values, onChange, onPredict, loading }: Inp
       {/* Divider */}
       <div
         className="mx-6"
-        style={{ height: '1px', background: 'rgba(255,255,255,0.05)' }}
+        style={{ height: '1px', background: 'rgba(0,0,0,0.05)' }}
       />
 
       {/* Predict button */}
@@ -132,7 +132,7 @@ export default function InputPanel({ values, onChange, onPredict, loading }: Inp
           )}
         </motion.button>
 
-        <p className="mt-3 text-center text-[10px] font-medium text-white/20 tracking-wide">
+        <p className="mt-3 text-center text-[10px] font-medium text-slate-400 tracking-wide">
           XGBoost · Conformal Prediction · ±90% CI
         </p>
       </div>

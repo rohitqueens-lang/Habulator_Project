@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { motion, AnimatePresence, useMotionValue, useTransform, animate } from 'framer-motion'
+import { motion, AnimatePresence, useMotionValue, animate } from 'framer-motion'
 import { Waves, BarChart3 } from 'lucide-react'
 import BloomBadge from './BloomBadge'
 import PredictionRange from './PredictionRange'
@@ -38,11 +38,11 @@ function AnimatedNumber({ target }: { target: number }) {
       style={{
         fontSize: 'clamp(2rem, 5vw, 3.5rem)',
         lineHeight: 1,
-        background: 'linear-gradient(135deg, #22D3EE 0%, #67E8F9 60%, #fff 100%)',
+        background: 'linear-gradient(135deg, #22D3EE 0%, #67E8F9 60%, #0EA5E9 100%)',
         WebkitBackgroundClip: 'text',
         WebkitTextFillColor: 'transparent',
         backgroundClip: 'text',
-        filter: 'drop-shadow(0 0 20px rgba(34,211,238,0.3))',
+        filter: 'drop-shadow(0 0 20px rgba(34,211,238,0.2))',
       }}
     >
       {formatMgL(0)}
@@ -54,7 +54,7 @@ function Divider() {
   return (
     <div
       className="w-full"
-      style={{ height: '1px', background: 'rgba(255,255,255,0.06)' }}
+      style={{ height: '1px', background: 'rgba(0,0,0,0.06)' }}
     />
   )
 }
@@ -128,7 +128,7 @@ function EmptyState() {
           animate={{ y: [0, -4, 0] }}
           transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
         >
-          <Waves size={32} className="text-cyan-500/40" strokeWidth={1.5} />
+          <Waves size={32} className="text-slate-200" strokeWidth={1.5} />
         </motion.div>
       </motion.div>
 
@@ -136,7 +136,7 @@ function EmptyState() {
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="mb-2 text-base font-semibold text-white/30"
+        className="mb-2 text-base font-semibold text-slate-300"
       >
         No prediction yet
       </motion.h3>
@@ -145,10 +145,10 @@ function EmptyState() {
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.28 }}
-        className="text-center text-sm text-white/20 max-w-[240px] leading-relaxed"
+        className="text-center text-sm text-slate-400 max-w-[240px] leading-relaxed"
       >
         Adjust the environmental parameters and click{' '}
-        <span className="text-white/35 font-medium">Predict Biovolume</span>
+        <span className="text-slate-500 font-medium">Predict Biovolume</span>
       </motion.p>
 
       {/* Dashed border container */}
@@ -163,8 +163,8 @@ function EmptyState() {
             key={i}
             className="h-8 rounded-lg"
             style={{
-              background: 'rgba(255,255,255,0.02)',
-              border: '1px dashed rgba(255,255,255,0.06)',
+              background: 'rgba(0,0,0,0.02)',
+              border: '1px dashed rgba(0,0,0,0.06)',
               opacity: 1 - i * 0.2,
             }}
           />
@@ -204,11 +204,11 @@ function ResultContent({ result }: { result: PredictionResult }) {
       >
         <div className="flex items-baseline gap-2.5">
           <AnimatedNumber target={result.pred_mgL} />
-          <span className="text-lg font-medium text-white/35 pb-1">mg/L</span>
+          <span className="text-lg font-medium text-slate-400 pb-1">mg/L</span>
         </div>
         <div className="flex items-center gap-3 flex-wrap">
           <BloomBadge level={level} size="md" />
-          <span className="text-xs text-white/25 font-medium">
+          <span className="text-xs text-slate-400 font-medium">
             EDIAT Biovolume · XGBoost
           </span>
         </div>
@@ -251,7 +251,7 @@ export default function ResultPanel({ result, loading }: ResultPanelProps) {
       {/* Panel header */}
       <div
         className="flex items-center gap-3 px-6 py-5 flex-shrink-0"
-        style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}
+        style={{ borderBottom: '1px solid rgba(0,0,0,0.06)' }}
       >
         <div
           className="flex h-8 w-8 items-center justify-center rounded-lg"
@@ -263,8 +263,8 @@ export default function ResultPanel({ result, loading }: ResultPanelProps) {
           <BarChart3 size={15} className="text-cyan-400" strokeWidth={2} />
         </div>
         <div>
-          <h2 className="text-sm font-semibold text-white/90 tracking-wide">Prediction Results</h2>
-          <p className="text-[11px] text-white/30 font-medium tracking-wide">
+          <h2 className="text-sm font-semibold text-slate-800 tracking-wide">Prediction Results</h2>
+          <p className="text-[11px] text-slate-400 font-medium tracking-wide">
             {result ? 'EDIAT Biovolume · mg/L' : 'Awaiting input'}
           </p>
         </div>
@@ -283,7 +283,7 @@ export default function ResultPanel({ result, loading }: ResultPanelProps) {
               className="h-1.5 w-1.5 rounded-full"
               style={{ background: '#22C55E', boxShadow: '0 0 6px #22C55E' }}
             />
-            <span className="text-[10px] font-semibold text-green-400/80 tracking-wide">
+            <span className="text-[10px] font-semibold text-green-600 tracking-wide">
               Complete
             </span>
           </motion.div>

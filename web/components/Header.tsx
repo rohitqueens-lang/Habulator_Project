@@ -48,7 +48,7 @@ export default function Header() {
             >
               HABULATOR
             </span>
-            <span className="text-[10px] font-medium tracking-widest text-white/30 leading-none">
+            <span className="text-[10px] font-medium tracking-widest text-slate-400 leading-none">
               GREAT LAKES&nbsp;·&nbsp;PHYTOPLANKTON PREDICTOR
             </span>
           </div>
@@ -65,10 +65,10 @@ export default function Header() {
             transition={{ delay: 0.3, duration: 0.4 }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="flex h-9 w-9 items-center justify-center rounded-lg text-white/40 transition-colors hover:text-white/70"
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-slate-400 transition-colors hover:text-slate-700"
             style={{
-              border: '1px solid rgba(255,255,255,0.08)',
-              background: 'rgba(255,255,255,0.03)',
+              border: '1px solid rgba(0,0,0,0.08)',
+              background: 'rgba(0,0,0,0.02)',
             }}
             aria-label="View on GitHub"
           >

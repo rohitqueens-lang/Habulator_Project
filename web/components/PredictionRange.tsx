@@ -46,7 +46,7 @@ function Marker({
             className="relative z-10 h-4 w-4 rounded-full"
             style={{
               background: color,
-              border: '2px solid rgba(255,255,255,0.4)',
+              border: '2px solid rgba(255,255,255,0.8)',
               boxShadow: `0 0 12px ${color}, 0 0 24px ${color}60`,
             }}
           />
@@ -56,7 +56,7 @@ function Marker({
           className="h-2.5 w-2.5 rounded-full mb-1"
           style={{
             background: color,
-            border: '1.5px solid rgba(255,255,255,0.25)',
+            border: '1.5px solid rgba(255,255,255,0.6)',
             boxShadow: `0 0 6px ${color}80`,
           }}
         />
@@ -97,10 +97,10 @@ export default function PredictionRange({ lower, pred, upper }: PredictionRangeP
   return (
     <div ref={ref} className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-xs font-semibold text-white/50 tracking-widest uppercase">
+        <h3 className="text-xs font-semibold text-slate-500 tracking-widest uppercase">
           Confidence Interval
         </h3>
-        <span className="text-[10px] font-medium text-white/25 tracking-wide">
+        <span className="text-[10px] font-medium text-slate-400 tracking-wide">
           90% coverage
         </span>
       </div>
@@ -110,7 +110,7 @@ export default function PredictionRange({ lower, pred, upper }: PredictionRangeP
         {/* Base track */}
         <div
           className="relative h-2 w-full rounded-full"
-          style={{ background: 'rgba(255,255,255,0.07)' }}
+          style={{ background: '#F1F5F9' }}
         >
           {/* Gradient confidence band */}
           <motion.div
@@ -137,7 +137,7 @@ export default function PredictionRange({ lower, pred, upper }: PredictionRangeP
               transform: `translateX(-50%) translateY(-50%)`,
               width: '2px',
               height: '24px',
-              background: 'rgba(255,255,255,0.7)',
+              background: 'rgba(15,23,42,0.5)',
               borderRadius: '1px',
             }}
           />
@@ -185,7 +185,7 @@ export default function PredictionRange({ lower, pred, upper }: PredictionRangeP
             <span className="text-xs font-medium" style={{ color: '#3B82F6' }}>
               {formatMgL(lower)}
             </span>
-            <span className="text-[10px] text-white/30 font-medium tracking-wide">Low</span>
+            <span className="text-[10px] text-slate-400 font-medium tracking-wide">Low</span>
           </motion.div>
 
           {/* Best label */}
@@ -200,12 +200,12 @@ export default function PredictionRange({ lower, pred, upper }: PredictionRangeP
               className="text-sm font-semibold"
               style={{
                 color: '#22D3EE',
-                textShadow: '0 0 10px rgba(34,211,238,0.4)',
+                textShadow: '0 0 10px rgba(34,211,238,0.3)',
               }}
             >
               {formatMgL(pred)}
             </span>
-            <span className="text-[10px] font-semibold tracking-wide" style={{ color: 'rgba(34,211,238,0.6)' }}>
+            <span className="text-[10px] font-semibold tracking-wide" style={{ color: 'rgba(34,211,238,0.7)' }}>
               Best
             </span>
           </motion.div>
@@ -221,7 +221,7 @@ export default function PredictionRange({ lower, pred, upper }: PredictionRangeP
             <span className="text-xs font-medium" style={{ color: '#F97316' }}>
               {formatMgL(upper)}
             </span>
-            <span className="text-[10px] text-white/30 font-medium tracking-wide">High</span>
+            <span className="text-[10px] text-slate-400 font-medium tracking-wide">High</span>
           </motion.div>
         </div>
       </div>
@@ -230,22 +230,22 @@ export default function PredictionRange({ lower, pred, upper }: PredictionRangeP
       <div className="flex items-center justify-center gap-5">
         <div className="flex items-center gap-1.5">
           <div className="h-1.5 w-3 rounded-full" style={{ background: '#3B82F6' }} />
-          <span className="text-[10px] text-white/30 font-medium">Lower bound</span>
+          <span className="text-[10px] text-slate-400 font-medium">Lower bound</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div
             className="h-2 w-2 rounded-full"
             style={{ background: '#22D3EE', boxShadow: '0 0 6px #22D3EE' }}
           />
-          <span className="text-[10px] text-white/30 font-medium">Best estimate</span>
+          <span className="text-[10px] text-slate-400 font-medium">Best estimate</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="h-1.5 w-3 rounded-full" style={{ background: '#F97316' }} />
-          <span className="text-[10px] text-white/30 font-medium">Upper bound</span>
+          <span className="text-[10px] text-slate-400 font-medium">Upper bound</span>
         </div>
       </div>
 
-      <p className="text-center text-[10px] text-white/20 font-medium tracking-wide">
+      <p className="text-center text-[10px] text-slate-400 font-medium tracking-wide">
         Conformal prediction interval · 90% nominal coverage
       </p>
     </div>
