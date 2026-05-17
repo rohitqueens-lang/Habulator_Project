@@ -11,8 +11,8 @@ export default function Header() {
       transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
       className="sticky top-0 z-50 w-full"
       style={{
-        background: 'rgba(10,15,30,0.7)',
-        borderBottom: '1px solid rgba(255,255,255,0.07)',
+        background: 'rgba(255,255,255,0.85)',
+        borderBottom: '1px solid rgba(0,0,0,0.08)',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
       }}
@@ -56,25 +56,6 @@ export default function Header() {
 
         {/* Right badges */}
         <div className="flex items-center gap-3">
-          <motion.div
-            initial={{ opacity: 0, x: 16 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.25, duration: 0.4 }}
-            className="hidden items-center gap-2 rounded-full px-3 py-1.5 sm:flex"
-            style={{
-              background: 'rgba(34,211,238,0.08)',
-              border: '1px solid rgba(34,211,238,0.2)',
-            }}
-          >
-            <span
-              className="h-1.5 w-1.5 rounded-full"
-              style={{ background: '#22D3EE', boxShadow: '0 0 6px #22D3EE' }}
-            />
-            <span className="text-xs font-medium text-cyan-300/80 tracking-wide">
-              Great Lakes 2001–2022
-            </span>
-          </motion.div>
-
           <motion.a
             href="https://github.com"
             target="_blank"

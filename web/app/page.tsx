@@ -129,8 +129,8 @@ export default function HomePage() {
         transition={{ delay: 0.8 }}
         className="py-6 text-center"
       >
-        <p className="text-[11px] font-medium text-white/18 tracking-wide">
-          Habulator v1.0&nbsp;&nbsp;·&nbsp;&nbsp;XGBoost + Conformal Prediction&nbsp;&nbsp;·&nbsp;&nbsp;Great Lakes 2001–2022&nbsp;&nbsp;·&nbsp;&nbsp;Shukla Lab
+        <p className="text-[11px] font-medium text-slate-400 tracking-wide">
+          Habulator v1.0&nbsp;&nbsp;·&nbsp;&nbsp;XGBoost + Conformal Prediction&nbsp;&nbsp;·&nbsp;&nbsp;Shukla Lab
         </p>
       </motion.footer>
     </div>
