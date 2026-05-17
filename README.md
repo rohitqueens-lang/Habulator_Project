@@ -236,10 +236,9 @@ If you use Habulator in your research, please cite:
 
 ## License
 
-MIT © 2026 Rohit Shukla · Virginia Tech
+MIT © 2026 Rohit Shukla 
 
 ---
 
 <div align="center">
-Built with ❤️ for open Great Lakes science
 </div>
